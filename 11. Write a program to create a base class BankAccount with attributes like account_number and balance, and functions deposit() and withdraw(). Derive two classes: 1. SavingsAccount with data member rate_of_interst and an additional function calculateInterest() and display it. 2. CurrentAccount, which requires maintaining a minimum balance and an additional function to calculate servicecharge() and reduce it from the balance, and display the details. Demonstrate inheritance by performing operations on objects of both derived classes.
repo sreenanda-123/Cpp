@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+
+
+class BankAccount {
+protected:
+    string account_number;
+    double balance;
+
+public:
+    BankAccount() : balance(0) {}
+
+    void inputAccount() {
+        cout << "Enter account number: ";
+        getline(cin, account_number);
+        cout << "Enter initial balance: ";
+        cin >> balance;
+        cin.ignore();
+    }
+
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            cout << "Deposited: " << amount << endl;
+        } else {
+            cout << "Invalid deposit amount!" << endl;
+        }
+    }
+
+    void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            cout << "Withdrawn: " << amount << endl;
+        } else {
+            cout << "Invalid or insufficient balance for withdrawal!" << endl;
+        }
+    }
+
+    void display() const {
+        cout << "Account Number: " << account_number << endl;
+        cout << "Balance: " << balance << endl;
+    }
+};
+
+class SavingsAccount : public BankAccount {
+private:
+    double rate_of_interest;  // e.g. 5% as 5.0
+
+public:
+    void inputSavingsDetails() {
+        cout << "Enter rate of interest (%): ";
+        cin >> rate_of_interest;
+        cin.ignore();
+    }
+
+    void calculateInterest(int years) const {
+        double interest = balance * rate_of_interest * years / 100;
+        cout << "Interest for " << years << " year(s): " << interest << endl;
+    }
+
+    void displaySavings() const {
+        display();
+        cout << "Rate of Interest: " << rate_of_interest << "%" << endl;
+    }
+};
+
+class CurrentAccount : public BankAccount {
+private:
+    double minimum_balance;
+
+public:
+    void inputCurrentDetails() {
+        cout << "Enter minimum balance required: ";
+        cin >> minimum_balance;
+        cin.ignore();
+    }
+
+    void calculateServiceCharge() {
+        if (balance < minimum_balance) {
+            double service_charge = 100; // Fixed service charge
+            cout << "Balance below minimum! Service charge applied: " << service_charge << endl;
+            if (balance >= service_charge) {
+                balance -= service_charge;
+            } else {
+                balance = 0;
+                cout << "Balance insufficient to cover service charge. Balance set to 0." << endl;
+            }
+        } else {
+            cout << "Balance meets minimum requirement. No service charge applied." << endl;
+        }
+    }
+
+    void displayCurrent() const {
+        display();
+        cout << "Minimum Balance Required: " << minimum_balance << endl;
+    }
+};
+
+int main() {
+    
+    cout << "Savings Account Details\n----------------------\n";
+    SavingsAccount sa;
+    sa.inputAccount();
+    sa.inputSavingsDetails();
+
+    sa.deposit(2000);
+    sa.withdraw(500);
+    sa.displaySavings();
+    sa.calculateInterest(2); 
+
+    cout << "\n";
+
+
+    cout << "Current Account Details\n----------------------\n";
+    CurrentAccount ca;
+    ca.inputAccount();
+    ca.inputCurrentDetails();
+
+    ca.deposit(1500);
+    ca.withdraw(1400);
+    ca.calculateServiceCharge();  
+    ca.displayCurrent();
+
+    return 0;
+}
