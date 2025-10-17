@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+class TelephoneBill {
+    string Name;
+    string Address;
+    string TelNo;
+    int NoOfCalls;
+
+public:
+  
+    TelephoneBill(string n, string a, string t, int calls) {
+        Name = n;
+        Address = a;
+        TelNo = t;
+        NoOfCalls = calls;
+    }
+
+    friend void calculateBill(TelephoneBill &tb);
+};
+
+void calculateBill(TelephoneBill &tb) {
+    int chargePerCall = 2;
+    int amount = tb.NoOfCalls * chargePerCall;
+
+    cout << "Telephone Bill Details:" << endl;
+    cout << "Name: " << tb.Name << endl;
+    cout << "Address: " << tb.Address << endl;
+    cout << "Telephone No: " << tb.TelNo << endl;
+    cout << "Number of Calls: " << tb.NoOfCalls << endl;
+    cout << "Amount to be paid: Rs. " << amount << endl;
+}
+
+int main() {
+    string name, address, telNo;
+    int calls;
+
+    
+    cout << "Enter Name: ";
+    getline(cin, name);
+
+    cout << "Enter Address: ";
+    getline(cin, address);
+
+    cout << "Enter Telephone Number: ";
+    getline(cin, telNo);
+
+    cout << "Enter Number of Calls: ";
+    cin >> calls;
+
+    
+    TelephoneBill tb(name, address, telNo, calls);
+
+    
+    calculateBill(tb);
+
+    return 0;
+}
