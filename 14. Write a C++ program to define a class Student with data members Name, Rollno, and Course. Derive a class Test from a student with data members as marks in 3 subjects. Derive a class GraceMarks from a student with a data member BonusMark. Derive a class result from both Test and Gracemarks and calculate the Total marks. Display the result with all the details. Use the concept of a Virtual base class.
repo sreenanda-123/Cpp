@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+
+class Student {
+protected:
+    string Name;
+    int Rollno;
+    string Course;
+
+public:
+    void inputStudent() {
+        cout << "Enter Name: ";
+        getline(cin, Name);
+        cout << "Enter Roll Number: ";
+        cin >> Rollno;
+        cin.ignore();
+        cout << "Enter Course: ";
+        getline(cin, Course);
+    }
+
+    void displayStudent() const {
+        cout << "\nStudent Details:\n";
+        cout << "Name: " << Name << endl;
+        cout << "Roll Number: " << Rollno << endl;
+        cout << "Course: " << Course << endl;
+    }
+};
+
+
+class Test : virtual public Student {
+protected:
+    int marks[3];
+
+public:
+    void inputMarks() {
+        cout << "Enter marks for 3 subjects: ";
+        for (int i = 0; i < 3; i++) {
+            cin >> marks[i];
+        }
+        cin.ignore();
+    }
+
+    int totalMarks() const {
+        return marks[0] + marks[1] + marks[2];
+    }
+
+    void displayMarks() const {
+        cout << "Marks: ";
+        for (int i = 0; i < 3; i++) {
+            cout << marks[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+class GraceMarks : virtual public Student {
+protected:
+    int BonusMark;
+
+public:
+    void inputBonus() {
+        cout << "Enter Bonus Marks: ";
+        cin >> BonusMark;
+        cin.ignore();
+    }
+
+    int getBonus() const {
+        return BonusMark;
+    }
+};
+
+
+class Result : public Test, public GraceMarks {
+public:
+    void displayResult() {
+        displayStudent();
+        displayMarks();
+        cout << "Bonus Marks: " << BonusMark << endl;
+        cout << "Total Marks (Including Bonus): " << totalMarks() + getBonus() << endl;
+    }
+};
+
+int main() {
+    Result r;
+
+    r.inputStudent();
+    r.inputMarks();
+    r.inputBonus();
+
+    cout << "\n--- Result ---\n";
+    r.displayResult();
+
+    return 0;
+}
