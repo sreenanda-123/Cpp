@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+class Number {
+private:
+    int value;
+
+public:
+  
+    Number(int v = 0) {
+        value = v;
+    }
+
+
+    void operator++() {
+        ++value;   
+    }
+
+    
+    void display() {
+        cout << "Value = " << value << endl;
+    }
+};
+
+int main() {
+    Number num(5);  
+
+    cout << "Before increment: ";
+    num.display();
+
+    ++num;   
+
+    cout << "After increment: ";
+    num.display();
+
+    return 0;
+}
