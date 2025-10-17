@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+
+class c_polygon {
+public:
+    virtual double area() const {  // Virtual function
+        return 0;
+    }
+};
+
+
+class c_rectangle : public c_polygon {
+private:
+    double length;
+    double width;
+
+public:
+    c_rectangle(double l, double w) : length(l), width(w) {}
+
+    double area() const override {  
+        return length * width;
+    }
+};
+
+
+class c_triangle : public c_polygon {
+private:
+    double base;
+    double height;
+
+public:
+    c_triangle(double b, double h) : base(b), height(h) {}
+
+    double area() const override {
+        return 0.5 * base * height;
+    }
+};
+
+int main() {
+    c_polygon* poly1 = new c_rectangle(10.0, 5.0);
+    c_polygon* poly2 = new c_triangle(8.0, 6.0);
+
+    cout << "Area of Rectangle: " << poly1->area() << endl;  // Calls c_rectangle's area()
+    cout << "Area of Triangle: " << poly2->area() << endl;   // Calls c_triangle's area()
+
+    delete poly1;
+    delete poly2;
+
+    return 0;
+}
