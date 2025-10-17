@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class OnlineShopping {
+protected:
+    string item_name;
+    int quantity;
+    float unit_price;
+public:
+    void inputItem() {
+        cout << "Enter item name: ";
+        cin.ignore();
+        getline(cin, item_name);
+        cout << "Enter quantity: ";
+        cin >> quantity;
+        cout << "Enter unit price: ";
+        cin >> unit_price;
+    }
+};
+
+class ShippingDetails {
+protected:
+    float shipping_charge;
+public:
+    void inputShipping() {
+        cout << "Enter shipping charge: ";
+        cin >> shipping_charge;
+    }
+};
+
+
+class Bill : public OnlineShopping, public ShippingDetails {
+public:
+    void displayBill() {
+        float total = (quantity * unit_price) + shipping_charge;
+        cout << "\n---- Bill Details ----\n";
+        cout << "Item: " << item_name << endl;
+        cout << "Quantity: " << quantity << endl;
+        cout << "Unit Price: Rs. " << unit_price << endl;
+        cout << "Shipping Charge: Rs. " << shipping_charge << endl;
+        cout << "Total Amount: Rs. " << total << endl;
+    }
+};
+
+int main() {
+    Bill b;
+
+    b.inputItem();
+    b.inputShipping();
+    b.displayBill();
+
+    return 0;
+}
